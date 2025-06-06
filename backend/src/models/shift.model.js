@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const shiftSchema = new mongoose.Schema({
   start: {
@@ -36,5 +36,4 @@ shiftSchema.pre('validate', function (next) {
 });
 
 const Shift = mongoose.model('Shift', shiftSchema);
-
-module.exports = Shift;
+export default Shift;

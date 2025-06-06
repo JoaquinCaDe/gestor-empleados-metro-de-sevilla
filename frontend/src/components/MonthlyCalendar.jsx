@@ -28,10 +28,12 @@ export function MonthlyCalendar({ month }) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
   // const { toast } = useToast()
-
   // Load shifts when month changes
   useEffect(() => {
     async function loadShifts() {
+      const currentUser = getCurrentUser()
+      if (!currentUser) return
+
       const shifts = await getAllShifts({
         startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-01`,
         endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-${new Date(
@@ -39,6 +41,7 @@ export function MonthlyCalendar({ month }) {
           month.getMonth() + 1,
           0,
         ).getDate()}`,
+        employee: currentUser.id
       })
       setSchedules(formatShiftsForCalendar(shifts))
     }
@@ -126,6 +129,9 @@ export function MonthlyCalendar({ month }) {
         employee: user.id,
       })
     }
+    const currentUser = getCurrentUser()
+    if (!currentUser) return
+
     const updated = await getAllShifts({
       startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-01`,
       endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-${new Date(
@@ -133,16 +139,19 @@ export function MonthlyCalendar({ month }) {
         month.getMonth() + 1,
         0,
       ).getDate()}`,
+      employee: currentUser.id
     })
     setSchedules(formatShiftsForCalendar(updated))
     setIsAddingTurno(false)
     setIsEditingTurno(false)
   }
-
   // Eliminar un turno
   const handleDeleteTurno = async () => {
     if (!selectedDate) return
     await deleteShift(schedules[selectedDate].id)
+    const currentUser = getCurrentUser()
+    if (!currentUser) return
+
     const updated = await getAllShifts({
       startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-01`,
       endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}-${new Date(
@@ -150,6 +159,7 @@ export function MonthlyCalendar({ month }) {
         month.getMonth() + 1,
         0,
       ).getDate()}`,
+      employee: currentUser.id
     })
     setSchedules(formatShiftsForCalendar(updated))
     setIsDeleteDialogOpen(false)

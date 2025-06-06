@@ -26,16 +26,28 @@ export function ShiftForm({ initialData, onSave, onCancel }) {
           placeholder="Ej: Turno mañana"
           required
         />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
+      </div>      <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="start">Hora de inicio</Label>
-          <Input id="start" type="time" value={start} onChange={(e) => setStart(e.target.value)} required />
+          <Input
+            id="start"
+            type="time"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+            required
+            className="[&::-webkit-calendar-picker-indicator]:filter-invert [&::-webkit-calendar-picker-indicator]:brightness-200"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="end">Hora de fin</Label>
-          <Input id="end" type="time" value={end} onChange={(e) => setEnd(e.target.value)} required />
+          <Input
+            id="end"
+            type="time"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+            required
+            className="[&::-webkit-calendar-picker-indicator]:filter-invert [&::-webkit-calendar-picker-indicator]:brightness-200"
+          />
         </div>
       </div>
 

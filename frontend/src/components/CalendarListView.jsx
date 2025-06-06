@@ -76,29 +76,44 @@ export function CalendarListView({ month }) {
         type: shift.type,
         employee: user.id
       })
-    }
+    } const currentUser = getCurrentUser()
+    if (!currentUser) return
+
     const updated = await getAllShifts({
       startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-01`,
-      endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-${new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()}`
+      endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-${new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()}`,
+      employee: currentUser.id
     })
     setSchedules(formatShiftsForCalendar(updated))
     setIsAddingShift(false)
     setIsEditingShift(false)
   }
-
   // Eliminar un turno
   const handleDeleteShift = async () => {
     await deleteShift(schedules[selectedDate].id)
-    const updated = await getAllShifts()
+    const currentUser = getCurrentUser()
+    if (!currentUser) return
+
+    const updated = await getAllShifts({
+      startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-01`,
+      endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-${new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()}`,
+      employee: currentUser.id
+    })
     setSchedules(formatShiftsForCalendar(updated))
     setIsDeleteDialogOpen(false)
     setDialogOpen(false)
   }
-
   // Cargar turnos de la API al montar el componente
   useEffect(() => {
     async function loadShifts() {
-      const shifts = await getAllShifts({ startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-01`, endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-${new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()}` })
+      const currentUser = getCurrentUser()
+      if (!currentUser) return
+
+      const shifts = await getAllShifts({
+        startDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-01`,
+        endDate: `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, '0')}-${new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()}`,
+        employee: currentUser.id
+      })
       setSchedules(formatShiftsForCalendar(shifts))
     }
     loadShifts()

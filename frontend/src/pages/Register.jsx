@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { TrainFrontTunnel, ArrowLeft } from "lucide-react"
 import { register } from "@/lib/auth"
 import { useAuth } from "@/contexts/AuthContext"
 // import { useToast } from "@/components/ui/use-toast"
@@ -70,105 +71,147 @@ export default function Register() {
       setIsLoading(false)
     }
   }
-
   return (
-    <div className="container flex h-screen w-screen bg-black bg-opacity-80 backdrop-blur-sm flex-col items-center justify-center p-4">      <Link to="/" className="absolute left-4 top-4 md:left-8 md:top-8">
-      <Button variant="ghost" className="text-white">← Volver</Button>
-    </Link>
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">        <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight text-white">Crear una cuenta</h1>
-        <p className="text-sm text-muted-foreground">Ingresa tus datos para registrarte</p>
-      </div>
-        <Card className="bg-gray-900 bg-opacity-80 border border-gray-700 rounded-xl shadow-xl backdrop-blur-sm">
-          <form onSubmit={handleSubmit}>
-            <CardContent className="pt-6">
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name" className="text-gray-300">Nombre completo</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    placeholder="Juan Pérez"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="username" className="text-gray-300">Nombre de usuario</Label>
-                  <Input
-                    id="username"
-                    type="text"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    placeholder="juanperez"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="dne" className="text-gray-300">Número de empleado (DNE)</Label>
-                  <Input
-                    id="dne"
-                    type="text"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    placeholder="EMP123456"
-                    value={dne}
-                    onChange={(e) => setDne(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email" className="text-gray-300">Correo electrónico</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    placeholder="nombre@ejemplo.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password" className="text-gray-300">Contraseña</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="confirm-password" className="text-gray-300">Confirmar contraseña</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    className="bg-gray-800 bg-opacity-50 placeholder-gray-500 text-white border-gray-600 focus:border-pink-500 focus:ring-pink-500 focus:ring focus:ring-opacity-40"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col">
-              <Button className="w-full bg-gradient-to-r from-pink-500 to-violet-500 text-white hover:opacity-90 shadow-md hover:shadow-pink-500/50 transition-transform" type="submit" disabled={isLoading}>
-                {isLoading ? "Registrando..." : "Registrarse"}
-              </Button>
-              <p className="mt-4 text-center text-sm text-gray-400">
-                ¿Ya tienes una cuenta?{" "}
-                <Link to="/iniciar-sesion" className="underline underline-offset-4 hover:text-pink-400">
-                  Iniciar sesión
-                </Link>
-              </p>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      {/* Header with back button and branding */}
+      <header className="p-6">
+        <div className="container flex items-center justify-between max-w-6xl">
+          {/* <Link to="/" className="flex items-center gap-2 text-white hover:text-pink-400 transition-colors">
+            <ArrowLeft className="h-5 w-5" />
+            <span className="font-medium">Volver al inicio</span>
+          </Link> */}
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-gradient-to-br from-pink-500 to-violet-500 rounded-lg">
+              <TrainFrontTunnel className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
+              Horarios Metro de Sevilla
+            </h1>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center p-6">
+        <div className="w-full max-w-md space-y-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-white">Crear cuenta</h2>
+            <p className="text-gray-400">Únete al equipo de Metro de Sevilla</p>
+          </div>
+
+          <Card className="border-t-4 border-t-pink-500 shadow-2xl bg-gray-900/50 border-gray-700 backdrop-blur-sm">
+            <CardHeader className="space-y-1 pb-6">
+              <CardTitle className="text-center text-white">Registro de empleado</CardTitle>
+            </CardHeader>
+            <form onSubmit={handleSubmit}>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-gray-300">Nombre completo</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                      placeholder="Juan Pérez García"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="username" className="text-gray-300">Usuario</Label>
+                      <Input
+                        id="username"
+                        type="text"
+                        className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                        placeholder="jperez"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="dne" className="text-gray-300">DNE</Label>
+                      <Input
+                        id="dne"
+                        type="text"
+                        className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                        placeholder="EMP123456"
+                        value={dne}
+                        onChange={(e) => setDne(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-gray-300">Correo electrónico</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                      placeholder="juan.perez@metro-sevilla.es"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="password" className="text-gray-300">Contraseña</Label>
+                      <Input
+                        id="password"
+                        type="password"
+                        className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="confirm-password" className="text-gray-300">Confirmar</Label>
+                      <Input
+                        id="confirm-password"
+                        type="password"
+                        className="bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50"
+                        placeholder="••••••••"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>              </CardContent>
+              <CardFooter className="flex flex-col space-y-4 pt-6">
+                <Button
+                  className="w-full bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600 text-white font-medium py-2.5 shadow-lg hover:shadow-pink-500/25 transform hover:scale-[1.02] transition-all duration-200"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creando cuenta..." : "Registrarse"}
+                </Button>
+                <p className="text-center text-sm text-gray-400">
+                  ¿Ya tienes una cuenta?{" "}
+                  <Link to="/iniciar-sesion" className="text-pink-400 hover:text-pink-300 font-medium transition-colors">
+                    Inicia sesión aquí
+                  </Link>
+                </p>
+              </CardFooter>
+            </form>
+          </Card>
+        </div>
+      </main>      {/* Footer */}
+      <footer className="border-t border-gray-800 py-6">
+        <div className="container flex flex-col items-center justify-center gap-4 md:h-16 max-w-6xl">
+          <p className="text-sm text-gray-400 text-center">
+            &copy; {new Date().getFullYear()} Horarios Metro de Sevilla - Metro de Sevilla. Todos los derechos reservados.
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -1,5 +1,5 @@
-const User = require('../models/user.model');
-const { generateToken } = require('../middleware/auth.middleware');
+import User from '../models/user.model.js';
+import { generateToken } from '../middleware/auth.middleware.js';
 
 // Register a new user
 const registerUser = async (req, res) => {
@@ -229,12 +229,4 @@ const deactivateUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  registerUser,
-  loginUser,
-  getUserProfile,
-  getAllUsers,
-  updateUser,
-  updatePassword,
-  deactivateUser
-};
+export { registerUser, loginUser, getUserProfile, getAllUsers, updateUser, updatePassword, deactivateUser };

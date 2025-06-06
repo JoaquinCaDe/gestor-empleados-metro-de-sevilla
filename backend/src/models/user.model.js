@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -22,12 +22,16 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
-  },
-  dne: {
+  }, dne: {
     type: String,
     required: true,
     unique: true,
     trim: true
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'employee'],
+    default: 'employee'
   },
   isActive: {
     type: Boolean,
@@ -57,4 +61,4 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+export default User;

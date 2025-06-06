@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/AuthContext"
 
 export default function Dashboard() {
   const [currentMonth, setCurrentMonth] = useState(new Date())
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
 
   const handlePreviousMonth = () => {
     const prevMonth = new Date(currentMonth)
@@ -29,12 +29,8 @@ export default function Dashboard() {
   const handleLogout = () => {
     logout()
   }
-
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-        {/* Dark header */}
-      </header>
       <header className="sticky top-0 z-50 w-full border-b bg-black/90 backdrop-blur-sm">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
@@ -42,7 +38,7 @@ export default function Dashboard() {
               <TrainFrontTunnel className="absolute h-full w-full object-cover text-pink-500" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
-              HorariosPro
+              Horarios Metro de Sevilla
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -97,52 +93,69 @@ export default function Dashboard() {
                 Siguiente
               </Button>
             </div>
+          </div>          {/* Show only CalendarListView on mobile and small screens (md and below) */}
+          <div className="md:hidden">
+            <Card className="border-t-4 border-t-violet-500 shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-pink-50 to-violet-50 dark:from-pink-950/20 dark:to-violet-950/20 rounded-t-lg">
+                <CardTitle className="flex items-center text-xl">
+                  <CalendarIcon className="mr-2 h-5 w-5 text-violet-500" />
+                  Lista de Horarios
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <CalendarListView month={currentMonth} />
+              </CardContent>
+            </Card>
           </div>
 
-          <Tabs defaultValue="calendar" className="w-full">
-            <TabsList className="flex space-x-2 mb-6 bg-black bg-opacity-50 backdrop-blur-sm p-1 rounded-lg">
-              <TabsTrigger value="calendar" className="flex-1 text-center py-2 text-gray-400 hover:text-gray-200 data-[state=active]:text-white relative data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:bottom-0 data-[state=active]:before:left-4 data-[state=active]:before:right-4 data-[state=active]:before:h-1 data-[state=active]:before:bg-gradient-to-r data-[state=active]:before:from-pink-500 data-[state=active]:before:to-violet-500">
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                Vista Calendario
-              </TabsTrigger>
-              <TabsTrigger value="list" className="flex-1 text-center py-2 text-gray-400 hover:text-gray-200 data-[state=active]:text-white relative data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:bottom-0 data-[state=active]:before:left-4 data-[state=active]:before:right-4 data-[state=active]:before:h-1 data-[state=active]:before:bg-gradient-to-r data-[state=active]:before:from-pink-500 data-[state=active]:before:to-violet-500">
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                Vista Lista
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="calendar">
-              <Card className="border-t-4 border-t-pink-500 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-pink-50 to-violet-50 dark:from-pink-950/20 dark:to-violet-950/20 rounded-t-lg">
-                  <CardTitle className="flex items-center text-xl">
-                    <CalendarIcon className="mr-2 h-5 w-5 text-pink-500" />
-                    Calendario Mensual
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <MonthlyCalendar month={currentMonth} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="list">
-              <Card className="border-t-4 border-t-violet-500 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-pink-50 to-violet-50 dark:from-pink-950/20 dark:to-violet-950/20 rounded-t-lg">
-                  <CardTitle className="flex items-center text-xl">
-                    <CalendarIcon className="mr-2 h-5 w-5 text-violet-500" />
-                    Lista de Horarios
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <CalendarListView month={currentMonth} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          {/* Show tabs on larger screens (md and up) */}
+          <div className="hidden md:block">
+            <Tabs defaultValue="calendar" className="w-full">
+              <TabsList className="flex space-x-2 mb-6 bg-black bg-opacity-50 backdrop-blur-sm p-1 rounded-lg">
+                <TabsTrigger value="calendar" className="flex-1 text-center py-2 text-gray-400 hover:text-gray-200 data-[state=active]:text-white relative data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:bottom-0 data-[state=active]:before:left-4 data-[state=active]:before:right-4 data-[state=active]:before:h-1 data-[state=active]:before:bg-gradient-to-r data-[state=active]:before:from-pink-500 data-[state=active]:before:to-violet-500">
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  Vista Calendario
+                </TabsTrigger>
+                <TabsTrigger value="list" className="flex-1 text-center py-2 text-gray-400 hover:text-gray-200 data-[state=active]:text-white relative data-[state=active]:before:content-[''] data-[state=active]:before:absolute data-[state=active]:before:bottom-0 data-[state=active]:before:left-4 data-[state=active]:before:right-4 data-[state=active]:before:h-1 data-[state=active]:before:bg-gradient-to-r data-[state=active]:before:from-pink-500 data-[state=active]:before:to-violet-500">
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  Vista Lista
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="calendar">
+                <Card className="border-t-4 border-t-pink-500 shadow-lg">
+                  <CardHeader className="bg-gradient-to-r from-pink-50 to-violet-50 dark:from-pink-950/20 dark:to-violet-950/20 rounded-t-lg">
+                    <CardTitle className="flex items-center text-xl">
+                      <CalendarIcon className="mr-2 h-5 w-5 text-pink-500" />
+                      Calendario Mensual
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <MonthlyCalendar month={currentMonth} />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="list">
+                <Card className="border-t-4 border-t-violet-500 shadow-lg">
+                  <CardHeader className="bg-gradient-to-r from-pink-50 to-violet-50 dark:from-pink-950/20 dark:to-violet-950/20 rounded-t-lg">
+                    <CardTitle className="flex items-center text-xl">
+                      <CalendarIcon className="mr-2 h-5 w-5 text-violet-500" />
+                      Lista de Horarios
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <CalendarListView month={currentMonth} />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} HorariosPro. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} Horarios Metro de Sevilla. Todos los derechos reservados.
           </p>
         </div>
       </footer>

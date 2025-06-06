@@ -1,13 +1,23 @@
-const express = require('express');
+import express from 'express';
+import * as shiftController from '../controllers/shift.controller.js';
+import { authenticateToken } from '../middleware/auth.middleware.js';
+
 const router = express.Router();
-const shiftController = require('../controllers/shift.controller');
-const { authenticateToken } = require('../middleware/auth.middleware');
 
 // All shift routes require authentication
 router.use(authenticateToken);
 
 // Create new shift
 router.post('/', shiftController.createShift);
+
+// TEST ENDPOINTS - Create test shift with immediate reminders
+router.post('/test', shiftController.createTestShift);
+
+// Get scheduled jobs status
+router.get('/jobs', shiftController.getScheduledJobs);
+
+// Test email functionality (send immediate email)
+router.post('/test-email', shiftController.testEmailNow);
 
 // Get all shifts for current user
 router.get('/', shiftController.getAllShifts);
@@ -21,4 +31,4 @@ router.put('/:id', shiftController.updateShift);
 // Delete shift
 router.delete('/:id', shiftController.deleteShift);
 
-module.exports = router;
+export default router;

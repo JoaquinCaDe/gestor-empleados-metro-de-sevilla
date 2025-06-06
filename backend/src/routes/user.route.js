@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const userController = require('../controllers/user.controller');
-const { authenticateToken, authenticateUser } = require('../middleware/auth.middleware');
+import * as userController from '../controllers/user.controller.js';
+import { authenticateToken, authenticateUser } from '../middleware/auth.middleware.js';
 
 // Public routes
 router.post('/register', userController.registerUser);
@@ -14,4 +14,4 @@ router.put('/update/:id', authenticateToken, authenticateUser, userController.up
 router.put('/password', authenticateToken, userController.updatePassword);
 router.put('/deactivate/:id', authenticateToken, userController.deactivateUser);
 
-module.exports = router;
+export default router;

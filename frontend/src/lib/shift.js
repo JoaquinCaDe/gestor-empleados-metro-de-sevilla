@@ -35,6 +35,42 @@ export async function createShift(shiftData) {
 }
 
 /**
+ * Create a new shift with quick test reminders (30s, 1min)
+ * @param {Object} shiftData - Shift data to create
+ * @param {string} shiftData.start - Start time (ISO date string)
+ * @param {string} shiftData.end - End time (ISO date string)
+ * @param {string} shiftData.title - Shift title
+ * @param {string} shiftData.type - Shift type (morning, afternoon, night)
+ * @param {string} shiftData.employee - Employee ID assigned to shift
+ * @returns {Promise<Object>} Created shift data
+ */
+export async function createShiftWithQuickTest(shiftData) {
+  try {
+    const shiftDataWithQuickTest = {
+      ...shiftData,
+      quickTest: true
+    };
+
+    const response = await fetch(`${API_BASE_URL}/shifts`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(shiftDataWithQuickTest),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Error al crear turno de prueba');
+    }
+
+    return data.shift;
+  } catch (error) {
+    console.error('Error al crear turno de prueba:', error);
+    throw error;
+  }
+}
+
+/**
  * Get all shifts with optional filters
  * @param {Object} [filters] - Optional filters
  * @param {string} [filters.startDate] - Filter by start date (ISO string)
