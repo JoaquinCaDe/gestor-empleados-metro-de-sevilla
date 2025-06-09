@@ -51,7 +51,7 @@ Para arrancar el proyecto en modo desarrollo:
 npm run dev
 ```
 
-El proyecto se ejecutará generalmente en `http://localhost:3000` (o el puerto configurado).
+El proyecto se ejecutará generalmente en `http://localhost:5173` (o el puerto configurado).
 
 Para construir la versión de producción:
 ```bash
